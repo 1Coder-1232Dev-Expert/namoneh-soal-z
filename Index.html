@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>نمونه سوال Z</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #e1f5e1;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+    }
+
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    #profile {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+    }
+
+    #profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    nav {
+      background-color: #388e3c;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 5px;
+      background-color: #4caf50;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #66bb6a;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    section {
+      display: none;
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    section.active {
+      display: block;
+    }
+
+    form {
+      margin-top: 10px;
+    }
+
+    input, button {
+      margin-top: 8px;
+      padding: 8px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1b5e20;
+    }
+
+    footer {
+      background-color: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>نمونه سوال Z</h1>
+    <div id="profile" style="display:none;">
+      <img id="profilePic" src="" alt="عکس کاربر">
+      <span id="profileName"></span>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#" onclick="showSection('home')">خانه</a>
+    <a href="#" onclick="showSection('signup')">ثبت‌نام</a>
+    <a href="#" onclick="showSection('upload')">آپلود سوال</a>
+    <a href="#" onclick="showSection('contact')">تماس با ما</a>
+  </nav>
+
+  <main>
+    <section id="home" class="active">
+      <h2>به "نمونه سوال Z" خوش آمدید!</h2>
+      <p>در این سایت می‌توانید نمونه سوالات خود را آپلود کرده یا سوالات دیگران را ببینید.</p>
+    </section>
+
+    <section id="signup">
+      <h3>ثبت‌نام با شماره موبایل</h3>
+      <form onsubmit="sendCode(event)">
+        <input type="text" id="phone" placeholder="شماره موبایل" required>
+        <button type="submit">ارسال کد تأیید</button>
+      </form>
+      <form onsubmit="verifyCode(event)" style="margin-top:10px;">
+        <input type="text" id="code" placeholder="کد تأیید (1234)" required>
+        <input type="text" id="name" placeholder="نام شما" required>
+        <input type="file" id="pic" accept="image/*" required>
+        <button type="submit">تأیید و ساخت اکانت</button>
+      </form>
+    </section>
+
+    <section id="upload">
+      <h3>آپلود فایل سوال</h3>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">آپلود</button>
+      </form>
+    </section>
+
+    <section id="contact">
+      <h3>تماس با ما</h3>
+      <p>شماره تماس: <strong>09106065847</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    تمامی حقوق محفوظ است © 2025 - نمونه سوال Z
+  </footer>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll("main section").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function sendCode(event) {
+      event.preventDefault();
+      alert("کد تأیید ارسال شد: 1234 (شبیه‌سازی شده)");
+    }
+
+    function verifyCode(event) {
+      event.preventDefault();
+      const code = document.getElementById("code").value;
+      const name = document.getElementById("name").value;
+      const pic = document.getElementById("pic").files[0];
+
+      if (code === "1234") {
+        const reader = new FileReader();
+        reader.onload = function () {
+          document.getElementById("profile").style.display = "flex";
+          document.getElementById("profileName").textContent = name;
+          document.getElementById("profilePic").src = reader.result;
+          showSection("home");
+        };
+        reader.readAsDataURL(pic);
+      } else {
+        alert("کد تأیید اشتباه است");
+      }
+    }
+  </script>
+
+</body>
+</html>
